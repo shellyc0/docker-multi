@@ -13,3 +13,10 @@ after_success:
         - docker build -t shellyc/multi-nginx ./nginx
         - docker build -t shellyc/multi-server ./server
         - docker build -t shellyc/multi-worker ./worker
+        # Log in docker CLI using Environment varibales we created on the web before (travis web)
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin 
+        # push images to docker hub
+        - docker push shellyc/multi-client
+        - docker push shellyc/multi-nginx
+        - docker push shellyc/multi-server
+        - docker push shellyc/multi-worker
