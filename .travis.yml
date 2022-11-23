@@ -1,0 +1,15 @@
+sudo: required
+services:
+        - docker
+
+before_install:
+        - docker build -t shellyc/react-test -f ./client/Dockerfile.dev ./client
+        # - docker build project2
+script:
+        - docker run shellyc/react-test npm test -- --coverage
+        # - docker run my 2 test
+after_success:
+        - docker build -t shellyc/multi-client ./client
+        - docker build -t shellyc/multi-nginx ./nginx
+        - docker build -t shellyc/multi-server ./server
+        - docker build -t shellyc/multi-worker ./worker
